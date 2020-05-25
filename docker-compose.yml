@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  akasq-portal:
+    image: "akasq/portal:latest"
+    build: ./
+    restart: unless-stopped
+    container_name: akasq-portal
+    command: /usr/bin/python3 manage.py runserver 0:8000
+    environment:
+      DB_NAME: akasq
+      DB_USER: postgres
+      DB_HOST: "akasq-postgres"
+    volumes:
+      - ./:/srv/portal
+    ports:
+      - "8000:8000"
+
+  akasq-postgres:
+    image: "postgres:10.13"
+    restart: unless-stopped
+    container_name: akasq-postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: akasq
+    volumes:
+      - ./storage/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  akasq-pgadmin4:
+    image: "dpage/pgadmin4"
+    restart: unless-stopped
+    container_name: akasq-pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nobody@email.com
+      PGADMIN_DEFAULT_PASSWORD: letmein
+      # PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 30
+    volumes:
+      - ./storage/pgadmin4/var/lib/pgadmin:/var/lib/pgadmin
+    ports:
+      - "8088:80"
