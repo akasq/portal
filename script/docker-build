@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker pull $(grep 'FROM' Dockerfile | cut -f 2 -d' ')
+
+docker build -t $(cd $(dirname $0) && ./docker-tag) $(dirname $0)/..

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+bundle install
+bundle exec rake db:setup --trace
+echo "Seeding database"
+bundle exec rake db:seed --trace
