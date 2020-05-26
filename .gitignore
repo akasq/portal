@@ -1,4 +1,3 @@
-db.sqlite3
+.envrc
 **/*.pyc
-/storage/pgadmin4/
-/storage/postgresql/
+/storage/

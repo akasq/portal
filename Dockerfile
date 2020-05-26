@@ -18,4 +18,13 @@ WORKDIR /srv/portal
 
 EXPOSE 8000
 
+ENV DB_HOST=akasq-postgres \
+    DB_USER=postgres \
+    DB_PASS=letmein \
+    DB_NAME=akasq \
+    DB_PORT=5432 \
+    ALLOWED_HOSTS=127.0.0.1
+
+ENV PYTHONUNBUFFERED=true
+
 CMD /bin/bash
