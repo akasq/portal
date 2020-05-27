@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.3.0
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.6.9
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: akasq
+          DB_USER: root
+          DB_PASS: root
+      - image: circleci/postgres:9.6.18
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: test_akasq
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: python3 ./manage.py test
+          name: Test
+
+  build:
+    docker:
+    - image: docker:stable-git
+    steps:
+    - checkout
+    - setup_remote_docker
+    - run: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
+    - run: script/docker-build
+    - run: script/docker-push
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+    - test:
+       context: akasq-global
+    - build:
+       context: akasq-global

@@ -14,8 +14,6 @@ RUN apt-get install -y \
 
 RUN pip3 install django==3.0.6
 
-WORKDIR /srv/portal
-
 EXPOSE 8000
 
 ENV DB_HOST=akasq-postgres \
@@ -26,5 +24,10 @@ ENV DB_HOST=akasq-postgres \
     ALLOWED_HOSTS=127.0.0.1
 
 ENV PYTHONUNBUFFERED=true
+
+RUN mkdir -p /srv/portal
+COPY . /srv/portal/
+
+WORKDIR /srv/portal
 
 CMD /bin/bash
