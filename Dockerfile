@@ -12,7 +12,11 @@ RUN apt-get install -y \
   python3-pip \
   python3-psycopg2
 
-RUN pip3 install django==3.0.6
+RUN mkdir -p /srv/portal
+WORKDIR /srv/portal
+
+COPY requirements.txt /srv/portal
+RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
@@ -25,9 +29,6 @@ ENV DB_HOST=akasq-postgres \
 
 ENV PYTHONUNBUFFERED=true
 
-RUN mkdir -p /srv/portal
 COPY . /srv/portal/
-
-WORKDIR /srv/portal
 
 CMD /bin/bash
