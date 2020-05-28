@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.template import loader
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the hlpoc index.")
+    template = loader.get_template('hlpoc/index.html')
+    return HttpResponse(template.render({}, request))
