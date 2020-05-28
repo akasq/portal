@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9k&_o)2x2qos^i&%+*iw6a#401a1kzsgncz4*&n)l2i-@+f2!q'
+SECRET_KEY = os.getenv('SECRET_KEY', '9k&_o)2x2qos^i&%+*iw6a#401a1kzsgncz4*&n)l2i-@+f2!q')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'health_check.db',            # stock Django health checkers
 #    'health_check.cache',
 #    'health_check.storage',
+    'bootstrap4',
+    'hlpoc'
 ]
 
 MIDDLEWARE = [
