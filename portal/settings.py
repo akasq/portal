@@ -27,6 +27,14 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
+if os.getenv('SSL_REDIRECT', 'False') == 'True':
+  SECURE_SSL_REDIRECT = True
+  SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+  SECURE_HSTS_SECONDS = 31536000
+  SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+  SECURE_HSTS_PRELOAD = True
+  SECURE_REDIRECT_EXEMPT = [r'^healthz$']
+
 # Application definition
 
 INSTALLED_APPS = [
