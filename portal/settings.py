@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import copy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', '9k&_o)2x2qos^i&%+*iw6a#401a1kzsgncz4*&n)l2i-@+f2!q')
+SECRET_KEY = os.getenv('SECRET_KEY', 'nososecret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
@@ -34,6 +35,15 @@ if os.getenv('SSL_REDIRECT', 'False') == 'True':
   SECURE_HSTS_INCLUDE_SUBDOMAINS = True
   SECURE_HSTS_PRELOAD = True
   SECURE_REDIRECT_EXEMPT = [r'^healthz$']
+
+if any(ALLOWED_HOSTS):
+    ENFORCE_HOST = copy.copy(ALLOWED_HOSTS)
+    for redirect_host in [h for h in os.getenv('REDIRECT_HOSTS', '').split(',') if h]:
+        print("Removing " + redirect_host + " from list of valid hostnames")
+        try:
+            ENFORCE_HOST.remove(redirect_host)
+        except ValueError:
+            print("%s is not in ALLOWED_HOSTS list, won't redirect it" % redirect_host)
 
 # Application definition
 
@@ -60,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'enforce_host.EnforceHostMiddleware'
 ]
 
 ROOT_URLCONF = 'portal.urls'
