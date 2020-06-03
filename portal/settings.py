@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'nososecret')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = [x for x in os.getenv('ALLOWED_HOSTS', '').split(',') if x]
 
 if os.getenv('SSL_REDIRECT', 'False') == 'True':
   SECURE_SSL_REDIRECT = True
