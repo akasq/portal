@@ -11,14 +11,14 @@ jobs:
           PIPENV_VENV_IN_PROJECT: true
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_NAME: akasq
+          DB_NAME: flimage
           DB_USER: root
           DB_PASS: root
       - image: circleci/postgres:9.6.18
         environment:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
-          POSTGRES_DB: test_akasq
+          POSTGRES_DB: test_flimage
     steps:
       - checkout
       - python/load-cache
@@ -43,6 +43,6 @@ workflows:
   test_and_build:
     jobs:
     - test:
-       context: akasq-global
+       context: flimage-global
     - build:
-       context: akasq-global
+       context: flimage-global

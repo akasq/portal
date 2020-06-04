@@ -1,6 +1,6 @@
 #!/bin/sh
 
-IMAGE=akasq/portal
+IMAGE=flimage/portal
 SOURCE_COMMIT=${CIRCLE_SHA1:-$(git rev-parse HEAD)}
 
 echo "$IMAGE:$SOURCE_COMMIT"

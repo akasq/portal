@@ -20,10 +20,10 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
-ENV DB_HOST=akasq-postgres \
+ENV DB_HOST=flimage-postgres \
     DB_USER=postgres \
     DB_PASS=letmein \
-    DB_NAME=akasq \
+    DB_NAME=flimage \
     DB_PORT=5432 \
     ALLOWED_HOSTS=127.0.0.1
 

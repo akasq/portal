@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  akasq-portal:
-    image: "akasq/portal:latest"
+  flimage-portal:
+    image: "flimage/portal:latest"
     build: ./
     restart: unless-stopped
-    container_name: akasq-portal
+    container_name: flimage-portal
     command: /usr/bin/python3 manage.py runserver 0:8000
     environment:
       - DB_NAME
@@ -19,22 +19,22 @@ services:
     ports:
       - "8000:8000"
 
-  akasq-postgres:
+  flimage-postgres:
     image: "postgres:10.13"
     restart: unless-stopped
-    container_name: akasq-postgres
+    container_name: flimage-postgres
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
-      POSTGRES_DB: akasq
+      POSTGRES_DB: flimage
     volumes:
       - ./storage/postgresql/data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
-#  akasq-pgadmin4:
+#  flimage-pgadmin4:
 #    image: "dpage/pgadmin4"
 #    restart: unless-stopped
-#    container_name: akasq-pgadmin4
+#    container_name: flimage-pgadmin4
 #    environment:
 #      PGADMIN_DEFAULT_EMAIL: nobody@email.com
 #      PGADMIN_DEFAULT_PASSWORD: letmein
